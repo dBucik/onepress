@@ -1791,13 +1791,37 @@ if ( ! function_exists( 'onepress_display_page_title' ) ) {
 		<?php if ( ! $hide_page_title ) { ?>
 			<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"<?php echo ( $img ) ? ' style="background-image: url(\'' . esc_url( $img ) . '\')" ' : ''; ?>>
 				<div class="container">
-					<?php
-					// WPCS: XSS OK.
-					echo '<' . $el . ' class="entry-title">' . $title . '</' . $el . '>';
-					if ( $excerpt ) {
-                        echo '<div class="entry-tagline">' . $excerpt . '</div>';
-					}
-					?>
+                    <div class="row">
+                        <div class="col-12 col-md-4">
+                            <?php
+                            // WPCS: XSS OK.
+                            echo '<' . $el . ' class="entry-title">' . $title . '</' . $el . '>';
+                            if ( $excerpt ) {
+                                echo '<div class="entry-tagline">' . $excerpt . '</div>';
+                            }
+                            ?>
+                        </div>
+                        <?php
+                            $contact_phone = get_theme_mod('onepress_header_contact_phone', '');
+                            if (!empty($contact_phone)) {
+                        ?>
+                        <div class="col-12 col-md-4 mt-2 mg-lg-0">
+                            <a class="btn btn-theme-primary btn-block" href="mailto:<?php echo $contact_phone; ?>"><?php echo $contact_phone; ?></a>
+                        </div>
+                        <?php
+                            }
+                        ?>
+                        <?php
+                            $contact_mail = get_theme_mod('onepress_header_contact_mail', '');
+                            if (!empty($contact_mail)) {
+                        ?>
+                        <div class="col-12 col-md-4 mt-2 mg-lg-0">
+                            <a class="btn btn-theme-primary btn-block" href="mailto:<?php echo $contact_mail; ?>"><?php echo $contact_mail; ?></a>
+                        </div>
+                        <?php
+                            }
+                        ?>
+                    </div>
 				</div>
 			</div>
 		<?php } ?>

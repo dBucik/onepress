@@ -385,3 +385,35 @@ $wp_customize->add_control(
 		)
 	)
 );
+
+$wp_customize->add_setting(
+    'onepress_header_contact_mail',
+    array(
+        'sanitize_callback' => 'sanitize_text_field',
+        'default'           => '',
+    )
+);
+$wp_customize->add_control(
+    'onepress_header_contact_mail',
+    array(
+        'label'       => esc_html__( 'Contact mail to be used in header buttons', 'onepress' ),
+        'section'     => 'onepress_header_settings',
+        'description' => '',
+    )
+);
+
+$wp_customize->add_setting(
+    'onepress_header_contact_phone',
+    array(
+        'sanitize_callback' => 'sanitize_text_field',
+        'default'           => '',
+    )
+);
+$wp_customize->add_control(
+    'onepress_header_contact_phone',
+    array(
+        'label'       => esc_html__( 'Contact phone to be used in header buttons', 'onepress' ),
+        'section'     => 'onepress_header_settings',
+        'description' => '',
+    )
+);

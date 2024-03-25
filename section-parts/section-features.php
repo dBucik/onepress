@@ -28,41 +28,34 @@ if ( !$disable && !empty( $data ) ) {
         <div class="section-content">
             <div class="row">
             <?php
-            $layout = intval( get_theme_mod( 'onepress_features_layout', 3 ) );
-            foreach ( $data as $k => $f ) {
-                $media = '';
+            $len = sizeof($data);
+            $forLastClass = $len % 2 !== 1;
+            for ($i = 0; $i < sizeof($data); $i++) {
+                $f = $data[$i];
                 $f =  wp_parse_args( $f, array(
-                    'icon_type' => 'icon',
-                    'icon' => 'gg',
                     'image' => '',
                     'link' => '',
                     'title' => '',
                     'desc' => '',
                 ) );
-                if ( $f['icon_type'] == 'image' && $f['image'] ){
-                    $url = onepress_get_media_url( $f['image'] );
-	                $image_alt = get_post_meta( $f['image']['id'], '_wp_attachment_image_alt', true);
-                    if ( $url ) {
-                        $media = '<span class="icon-image"><img src="'.esc_url( $url ).'" alt="'. $image_alt .'"></span>';
-                    }
-                } else if ( $f['icon'] ) {
-                    $f['icon'] = trim( $f['icon'] );
-                    $media = '<span class="fa-stack fa-5x"><i class="fa fa-circle fa-stack-2x icon-background-default"></i> <i class="feature-icon fa '.esc_attr( $f['icon'] ).' fa-stack-1x"></i></span>';
-                }
-
+                $img_url = onepress_get_media_url( $f['image'] );
+                $image_alt = get_post_meta( $f['image']['id'], '_wp_attachment_image_alt', true);
                 ?>
-                <div class="feature-item col-lg-<?php echo esc_attr( $layout ); ?> col-sm-6 wow slideInUp">
-                    <div class="feature-media">
-                        <?php if ( $f['link'] ) { ?><a title="<?php echo esc_attr( $f['title'] ) ?>" href="<?php echo esc_url( $f['link']  ); ?>"><?php } ?>
-                        <?php echo $media; ?>
-                        <?php if ( $f['link'] )  { ?></a><?php } ?>
+                <div class="feature-item col-12 p-0 mb-min-8 <?php if ($i < $len - 1 || $forLastClass) echo 'col-md-6';?>">
+                    <?php if ( $f['link'] ) { ?><a title="<?php echo esc_attr( $f['title'] ) ?>" href="<?php echo esc_url( $f['link']  ); ?>"><?php } ?>
+                        <div class="img-container">
+                        <img src="<?php echo esc_url( $img_url ); ?>" alt=" echo <?php echo $image_alt; ?>"/>
+                        <div class="overlay">
+                            <div>
+                                <h2><?php echo esc_html( $f['title'] ); ?></h2>
+                                <?php echo apply_filters( 'the_content', $f['desc'] ); ?>
+                            </div>
+                        </div>
                     </div>
-                    <h4><?php if ( $f['link'] ) { ?><a title="<?php echo esc_attr( $f['title'] ) ?>" href="<?php echo esc_url( $f['link']  ); ?>"><?php } ?><?php echo esc_html( $f['title'] ); ?><?php if ( $f['link'] )  { ?></a><?php } ?></h4>
-                    <div class="feature-item-content"><?php echo apply_filters( 'the_content', $f['desc'] ); ?></div>
+                    <?php if ( $f['link'] ) { ?></a><?php } ?>
                 </div>
             <?php
-            }// end loop featues
-
+            } // end forloop
             ?>
             </div>
         </div>
